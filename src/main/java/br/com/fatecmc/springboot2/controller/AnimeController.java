@@ -1,6 +1,7 @@
 package br.com.fatecmc.springboot2.controller;
 
 import br.com.fatecmc.springboot2.domain.Anime;
+import br.com.fatecmc.springboot2.service.AnimeService;
 import br.com.fatecmc.springboot2.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
 @Log4j2
 //@AllArgsConstructor Cria um construtor com todos os campos
 @RequiredArgsConstructor //Cria um construtor com os campos que são finais
@@ -23,12 +24,14 @@ public class AnimeController {
 
     //@Autowired
     private final DateUtil dateUtil;
+    private final AnimeService animeService;
 
     //localhost:8090/anime/list
     //@RequestMapping(method = RequestMethod.GET, path = "list")JEITO_ANTIGO
-    @GetMapping(path = "list")
+
+    @GetMapping
     public List<Anime> list(){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return List.of(new Anime( "DBZ"), new Anime("Naruto"));
+        return animeService.listAll();
     }
 }
