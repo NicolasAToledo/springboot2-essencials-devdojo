@@ -55,4 +55,11 @@ public class AnimeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         //OU return ResponseEntity.ok<>(animeService.listAll());
     }
+
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody Anime anime){
+        animeService.replace(anime);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        //OU return ResponseEntity.ok<>(animeService.listAll());
+    }
 }
