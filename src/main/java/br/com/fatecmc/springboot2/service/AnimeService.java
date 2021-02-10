@@ -1,6 +1,7 @@
 package br.com.fatecmc.springboot2.service;
 
 import br.com.fatecmc.springboot2.domain.Anime;
+import br.com.fatecmc.springboot2.exception.BadRequestException;
 import br.com.fatecmc.springboot2.mapper.AnimeMapper;
 import br.com.fatecmc.springboot2.repository.AnimeRepository;
 import br.com.fatecmc.springboot2.requests.AnimePostRequestBody;
@@ -30,7 +31,7 @@ public class AnimeService  {
 
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
+                .orElseThrow(() -> new BadRequestException("Anime not Found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody){
