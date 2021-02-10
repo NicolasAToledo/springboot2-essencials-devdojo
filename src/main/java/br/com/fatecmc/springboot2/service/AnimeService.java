@@ -1,6 +1,7 @@
 package br.com.fatecmc.springboot2.service;
 
 import br.com.fatecmc.springboot2.domain.Anime;
+import br.com.fatecmc.springboot2.mapper.AnimeMapper;
 import br.com.fatecmc.springboot2.repository.AnimeRepository;
 import br.com.fatecmc.springboot2.requests.AnimePostRequestBody;
 import br.com.fatecmc.springboot2.requests.AnimePutRequestBody;
@@ -29,7 +30,7 @@ public class AnimeService  {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody){
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(long id) {
@@ -38,10 +39,8 @@ public class AnimeService  {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime animeSaved = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        Anime anime = Anime.builder()
-                    .id(animeSaved.getId())
-                    .name(animePutRequestBody.getName())
-                    .build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(animeSaved.getId());
         animeRepository.save(anime);
     }
 }
