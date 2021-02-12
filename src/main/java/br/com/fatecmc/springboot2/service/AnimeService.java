@@ -7,14 +7,14 @@ import br.com.fatecmc.springboot2.repository.AnimeRepository;
 import br.com.fatecmc.springboot2.requests.AnimePostRequestBody;
 import br.com.fatecmc.springboot2.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-//É como se fosse a classe responsavel pela regra de negocio (RN)
+//É como se fosse a class responsavel pela regra de negocio (RN)
 @Service
 @RequiredArgsConstructor
 public class AnimeService  {
@@ -22,8 +22,8 @@ public class AnimeService  {
 
     //implements AnimeRepository
     private final AnimeRepository animeRepository;
-    public List<Anime> listAll(){
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable){
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByName(String name){
